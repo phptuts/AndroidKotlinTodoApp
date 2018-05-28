@@ -7,8 +7,6 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
-import io.reactivex.Flowable
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -30,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private fun setUpTodoList() {
 
         App.database
-                ?.todoDoa()
+                ?.todoDao()
                 ?.getUnCompleteTodo()
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
@@ -56,13 +54,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun completeTodo(id: Long) {
         App.database
-                ?.todoDoa()
+                ?.todoDao()
                 ?.get(id)
                 ?.flatMap {
                     it.completed = true
                     Single.fromCallable {
                         App.database
-                                ?.todoDoa()
+                                ?.todoDao()
                                 ?.update(it)
                     }
                     .subscribeOn(Schedulers.io())

@@ -15,7 +15,7 @@ class EditTodoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_todo)
         App.database
-                ?.todoDoa()
+                ?.todoDao()
                 ?.get(intent.getLongExtra("id", 1))
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
@@ -25,13 +25,13 @@ class EditTodoActivity : AppCompatActivity() {
 
     fun update(v: View) {
         App.database
-                ?.todoDoa()
+                ?.todoDao()
                 ?.get(intent.getLongExtra("id", 1))
                 ?.flatMap {
                     Single.fromCallable {
                         it.name = et_name_todo.text.toString()
                         App.database
-                                ?.todoDoa()
+                                ?.todoDao()
                                 ?.update(it)
                     }
                             .observeOn(AndroidSchedulers.mainThread())
@@ -45,12 +45,12 @@ class EditTodoActivity : AppCompatActivity() {
 
     fun delete(v: View) {
         App.database
-                ?.todoDoa()
+                ?.todoDao()
                 ?.get(intent.getLongExtra("id", 1))
                 ?.flatMap {
                     Single.fromCallable {
                         App.database
-                                ?.todoDoa()
+                                ?.todoDao()
                                 ?.delete(it)
                     }
                     .observeOn(AndroidSchedulers.mainThread())

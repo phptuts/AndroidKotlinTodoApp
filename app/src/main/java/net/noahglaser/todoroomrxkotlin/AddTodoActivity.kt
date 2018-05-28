@@ -23,7 +23,7 @@ class AddTodoActivity : AppCompatActivity() {
 
         Single.fromCallable<Long> {
            App.database
-                    ?.todoDoa()
+                    ?.todoDao()
                     ?.insert(todo)
 
         }
